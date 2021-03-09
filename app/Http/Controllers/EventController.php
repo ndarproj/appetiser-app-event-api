@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Http\Resources\EventResource;
 use App\Repositories\EventRepository;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class EventController extends Controller
 {
@@ -15,11 +16,11 @@ class EventController extends Controller
         $this->repository = $repository;
     }
 
-    public function getEvents()
+    public function getEvents(): ResourceCollection
     {
         return EventResource::collection($this->repository->getEvents());
     }
-    public function createEvent(EventRequest $request)
+    public function createEvent(EventRequest $request): EventResource
     {
         return (new EventResource($this->repository->createEvent($request->payload())));
     }
